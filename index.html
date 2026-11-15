@@ -15236,7 +15236,7 @@ body::before {
 </style>
 
 
-<!-- VOGUE_DOCK_V5_20261115 · correzione posizione iOS: nessun dato cambiato -->
+<!-- VOGUE_DOCK_V6_20261115 · elimina clipping dock su PWA iOS, nessun dato cambiato -->
 <style id="vogue-ios-layout-v5">
 /* Elimina la sovrapposizione del vecchio banner e la sfumatura nello spazio delle scritte. */
 html body { padding-top:0 !important; }
@@ -15286,16 +15286,22 @@ html body { padding-top:0 !important; }
   -webkit-text-stroke:.1px currentColor;
   text-shadow:none !important;
 }
-/* In Safari normale resta sopra la barra di sistema; su PWA standalone
-   scende nell'area libera fra viewport web e indicatore Home dell'iPhone. */
-#vc-bottom-tabs { bottom:1px !important; }
-@media (display-mode:standalone) {
-  #vc-bottom-tabs { bottom:calc(0px - env(safe-area-inset-bottom, 0px) - 8px) !important; }
-}
-/* Riconoscimento alternativo per le PWA aperte da Schermata Home su iOS. */
+/* V6: il dock deve restare ALL'INTERNO del viewport visibile. In V5 il
+   bottom negativo nella PWA lo faceva finire dietro l'area riservata di iOS:
+   per questo si vedeva soltanto la parte superiore della barra.
+   Lo teniamo molto basso, ma mai sotto il limite inferiore utilizzabile. */
+#vc-bottom-tabs,
 html.vogue-standalone #vc-bottom-tabs {
-  bottom:calc(0px - env(safe-area-inset-bottom, 0px) - 8px) !important;
+  bottom:max(5px, calc(env(safe-area-inset-bottom, 0px) - 27px)) !important;
+  transform:translate3d(-50%, 0, 0) !important;
+  visibility:visible !important;
 }
+@media (display-mode:standalone) {
+  #vc-bottom-tabs {
+    bottom:max(5px, calc(env(safe-area-inset-bottom, 0px) - 27px)) !important;
+  }
+}
+/* Vietato spingere il dock con offset negativi su iPhone. */
 /* I controlli di fondo devono essere sempre raggiungibili scorrendo. */
 #app { padding-bottom:calc(90px + env(safe-area-inset-bottom,0px)) !important; }
 </style>
