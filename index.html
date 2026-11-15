@@ -770,6 +770,70 @@ input,textarea,select{font-size:16px!important;}
 @media (max-width:820px){#app > .hdr { padding-left:64px; padding-right:12px; } #app > .hdr .hdr-l { align-items:flex-start; } .vd-menu-toggle {top:12px;left:11px;width:45px;height:45px;} }
 @media (prefers-reduced-motion:reduce){ .vd-panel,.vd-backdrop { transition-duration:.01ms!important; } }
 </style>
+
+<!-- VOGUE_COMPACT_NAV_V2_20261115: solo interfaccia, dati e sync invariati -->
+<style id="vogue-compact-nav-v2">
+/* La fascia demo ora vive dietro l'area di stato/notch: i comandi demo sono nel drawer. */
+html body { padding-top:0 !important; }
+#banco-demo-banner {
+  position:fixed !important; inset:0 0 auto 0 !important;
+  display:block !important; box-sizing:border-box !important;
+  height:calc(env(safe-area-inset-top, 0px) + 3px) !important;
+  min-height:3px !important; padding:0 !important;
+  overflow:visible !important; pointer-events:none !important;
+  background:linear-gradient(180deg,#483018 0%,#67431b 90%,#845518 100%) !important;
+  border-bottom:1px solid rgba(220,160,68,.36);
+}
+#banco-demo-banner > span, #banco-demo-banner > button,
+#banco-demo-actions, #banco-demo-file { display:none !important; }
+#app { padding-top:var(--sat) !important; }
+#app > .hdr {
+  position:sticky; top:var(--sat); z-index:250;
+  display:flex; align-items:center; gap:8px;
+  min-height:64px; padding:9px 12px 9px 66px;
+  text-align:left; background:rgba(9,13,23,.97);
+  border-bottom:1px solid rgba(201,169,110,.18);
+  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+}
+#app > .hdr .hdr-l {
+  display:flex; flex:1; flex-direction:column; align-items:flex-start;
+  justify-content:center; gap:2px; min-width:0; text-align:left;
+}
+#app > .hdr .hdr-greet { font-size:10px; font-weight:500; line-height:1.15; letter-spacing:.17em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+#app > .hdr .hdr-title { font-size:clamp(1.34rem,5.4vw,1.75rem); line-height:1.05; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#app > .hdr .hdr-title-link::after { display:none !important; }
+#app > .hdr .hdr-c, #app > .hdr .hdr-r, #app > .hdr #sync-row { display:none !important; }
+#app > .hdr .vd-menu-toggle { top:50%; left:12px; width:43px; height:43px; transform:translateY(-50%); }
+#app > .hdr .vd-menu-toggle:active { transform:translateY(-50%) scale(.96); }
+#app > .hdr .vc-back {
+  display:none; flex:0 0 auto; align-items:center; justify-content:center;
+  min-height:39px; border:1px solid rgba(255,255,255,.12);
+  border-radius:9px; background:#151c28; color:#d1c3ac;
+  padding:0 10px; font:500 12px/1.2 -apple-system,BlinkMacSystemFont,'Outfit',sans-serif;
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+}
+#app > .hdr.vc-in-section .vc-back { display:flex; }
+#app > .hdr .vc-back:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+/* La navigazione duplicata ora compare solo nel drawer. */
+#app > .tab-bar, #tab-dashboard > .vog2-shortcuts { display:none !important; }
+/* Nessun vuoto artificiale prima delle schermate. */
+#app .vhome { padding-top:12px; }
+#app .prod-wrap { padding-top:9px; }
+#app .main { padding-top:10px; }
+/* La classe is-visible resta durante il rientro del pannello: chiusura animata. */
+.vd-overlay { visibility:hidden; pointer-events:none; }
+.vd-overlay.is-visible { visibility:visible; pointer-events:auto; }
+.vd-overlay.is-open { visibility:visible; }
+.vd-backdrop { transition:opacity .3s ease; }
+.vd-panel { transition:transform .3s cubic-bezier(.22,.82,.24,1); }
+.vd-group-label { margin-top:16px; }
+.vd-nav button { min-height:44px; }
+.vd-nav button[aria-current="page"] { background:#3a3224; }
+.vd-bottom { padding-bottom:18px; }
+@media (min-width:821px) { #app > .hdr { padding-left:72px; } }
+@media (max-width:480px) { #app > .hdr { min-height:61px; padding-right:10px; } #app > .hdr .vc-back { padding:0 8px; } }
+@media (prefers-reduced-motion:reduce) { .vd-panel,.vd-backdrop { transition-duration:.01ms!important; } }
+</style>
 </head>
 <body><div id="boot301">Banco 3.0.1 · apertura archivio locale… <a style="color:#9df" href="/diagnosi-iphone301.html">Diagnostica e recupero</a><p>Non occorre una chiave Anthropic. Se manca la rete, l’archivio già presente deve aprirsi comunque.</p></div>
 
@@ -888,32 +952,56 @@ input,textarea,select{font-size:16px!important;}
         <div><div class="vd-app-name">Centro di Comando</div><div class="vd-app-sub">Navigazione rapida</div></div>
         <button type="button" class="vd-close" id="vd-close" aria-label="Chiudi menu">×</button>
       </div>
-      <div class="vd-group-label">Principali</div>
-      <nav class="vd-nav" aria-label="Sezioni principali">
+      <div class="vd-group-label">Operatività</div>
+      <nav class="vd-nav" aria-label="Sezioni operative">
         <button type="button" data-vd-route="home"><span class="vd-emoji" aria-hidden="true">⌂</span> Home</button>
-        <button type="button" data-vd-route="lotti"><span class="vd-emoji" aria-hidden="true">📦</span> Lotti / Arrivi</button>
         <button type="button" data-vd-route="ordini"><span class="vd-emoji" aria-hidden="true">📋</span> Ordini</button>
+        <button type="button" data-vd-route="lotti"><span class="vd-emoji" aria-hidden="true">📦</span> Lotti / Arrivi</button>
         <button type="button" data-vd-route="pedaggio-home"><span class="vd-emoji" aria-hidden="true">📏</span> Pedaggiatura</button>
         <button type="button" data-vd-route="tinture"><span class="vd-emoji" aria-hidden="true">⚖️</span> Tinture</button>
-        <button type="button" data-vd-route="avanzamento"><span class="vd-emoji" aria-hidden="true">🏭</span> Lavorazioni</button>
-        <button type="button" data-vd-route="ricette"><span class="vd-emoji" aria-hidden="true">🧪</span> Ricette</button>
+        <button type="button" data-vd-route="avanzamento"><span class="vd-emoji" aria-hidden="true">🏭</span> Lavorazioni / Avanzamento</button>
         <button type="button" data-vd-route="vernice"><span class="vd-emoji" aria-hidden="true">🎨</span> Verniciatura</button>
         <button type="button" data-vd-route="crust-home"><span class="vd-emoji" aria-hidden="true">🟤</span> Crust disponibile</button>
       </nav>
       <div class="vd-section-divider"></div>
-      <div class="vd-group-label">Altre sezioni</div>
-      <nav class="vd-nav" aria-label="Altre sezioni">
-        <button type="button" data-vd-route="dashboard"><span class="vd-emoji" aria-hidden="true">📅</span> Piano e calendario</button>
+      <div class="vd-group-label">Organizzazione e cicli</div>
+      <nav class="vd-nav" aria-label="Organizzazione e cicli">
+        <button type="button" data-vd-route="produzione"><span class="vd-emoji" aria-hidden="true">📊</span> Organizzazione</button>
+        <button type="button" data-vd-route="magazzino"><span class="vd-emoji" aria-hidden="true">🏭</span> Produzione / Magazzino</button>
+        <button type="button" data-vd-route="dashboard"><span class="vd-emoji" aria-hidden="true">🗓️</span> Piano e calendario</button>
         <button type="button" data-vd-route="cicli"><span class="vd-emoji" aria-hidden="true">🔁</span> Cicli di produzione</button>
-        <button type="button" data-vd-route="inventario"><span class="vd-emoji" aria-hidden="true">🗄️</span> Inventario</button>
+        <button type="button" data-vd-route="tempi"><span class="vd-emoji" aria-hidden="true">⏱️</span> Tempi di lavoro</button>
+        <button type="button" data-vd-action="calc-tempi"><span class="vd-emoji" aria-hidden="true">🧮</span> Calcola tempi</button>
+      </nav>
+      <div class="vd-section-divider"></div>
+      <div class="vd-group-label">Ricette e materiali</div>
+      <nav class="vd-nav" aria-label="Ricette e materiali">
+        <button type="button" data-vd-route="ricette"><span class="vd-emoji" aria-hidden="true">🧪</span> Ricette</button>
         <button type="button" data-vd-route="prodotti"><span class="vd-emoji" aria-hidden="true">🧴</span> Prodotti</button>
+        <button type="button" data-vd-route="inventario"><span class="vd-emoji" aria-hidden="true">🗄️</span> Inventario</button>
+      </nav>
+      <div class="vd-section-divider"></div>
+      <div class="vd-group-label">Strumenti</div>
+      <nav class="vd-nav" aria-label="Strumenti">
+        <button type="button" data-vd-action="briefing"><span class="vd-emoji" aria-hidden="true">✦</span> Briefing</button>
+        <button type="button" data-vd-action="load-all"><span class="vd-emoji" aria-hidden="true">⬡</span> Carica tutto</button>
+        <button type="button" data-vd-action="import-update"><span class="vd-emoji" aria-hidden="true">⬆️</span> Aggiorna da file</button>
+        <button type="button" data-vd-action="import-colors"><span class="vd-emoji" aria-hidden="true">🎨</span> Importa produzione e colori</button>
+        <button type="button" data-vd-action="import-history"><span class="vd-emoji" aria-hidden="true">📑</span> Importa lavorazioni Excel</button>
         <button type="button" data-vd-route="impostazioni"><span class="vd-emoji" aria-hidden="true">⚙️</span> Impostazioni</button>
+      </nav>
+      <div class="vd-section-divider"></div>
+      <div class="vd-group-label">Archivio dimostrativo · solo iPhone</div>
+      <nav class="vd-nav" aria-label="Dati della demo">
+        <button type="button" data-vd-action="demo-export"><span class="vd-emoji" aria-hidden="true">⬇️</span> Esporta dati demo (JSON)</button>
+        <button type="button" data-vd-action="demo-import"><span class="vd-emoji" aria-hidden="true">⬆️</span> Importa dati demo (JSON)</button>
+        <button type="button" data-vd-action="demo-reset"><span class="vd-emoji" aria-hidden="true">↺</span> Ripristina dati demo</button>
       </nav>
       <div class="vd-bottom">La navigazione non modifica gli ordini né i dati salvati.</div>
     </aside>
   </div>
 
-  <header class="hdr">
+  <header class="hdr" id="vc-header">
 
     <button type="button" id="vd-menu-toggle" class="vd-menu-toggle" aria-label="Apri menu" aria-controls="vd-panel" aria-expanded="false" onclick="VogueDrawer.open()">
       <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -938,6 +1026,7 @@ input,textarea,select{font-size:16px!important;}
       <button class="btn-ico" id="hdr-tc-btn" title="Tempi" onclick="switchTab('tempi')">⏱</button>
       <button class="btn-ico" title="Impostazioni" onclick="openModal()">⚙</button>
     </div>
+    <button type="button" class="vc-back" id="vc-back" aria-label="Torna alla sezione precedente" onclick="VogueDrawer.back()">‹ Indietro</button>
   </header>
 
   <div id="brief-area" style="display:none;"></div>
@@ -3702,7 +3791,7 @@ function updClock(){
   document.getElementById("clock").textContent=n.toLocaleTimeString("it-IT");
   document.getElementById("dstr").textContent=n.toLocaleDateString("it-IT",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
   const h=n.getHours();
-  document.getElementById("greet").textContent=(h<12?"Buongiorno":h<18?"Buon pomeriggio":"Buonasera")+", Operatore";
+  if(!document.getElementById("vc-header")?.classList.contains("vc-in-section")) document.getElementById("greet").textContent=(h<12?"Buongiorno":h<18?"Buon pomeriggio":"Buonasera")+", Operatore";
 }
 
 // ─── TASKS ─────────────────────────────────────────────
@@ -14889,7 +14978,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 
-<!-- VOGUE_DRAWER_LEFT_V1_20261115 -->
+<!-- VOGUE_COMPACT_DRAWER_CONTROLLER_V2_20261115 -->
 <script id="vogue-drawer-controller">
 (function(){
   'use strict';
@@ -14898,49 +14987,143 @@ window.addEventListener('DOMContentLoaded',()=>{
   const toggle=document.getElementById('vd-menu-toggle');
   const closeButton=document.getElementById('vd-close');
   const backdrop=document.getElementById('vd-backdrop');
-  if(!overlay||!panel||!toggle||!closeButton||!backdrop) return;
-  let lastFocus=null,previousOverflow='';
+  const header=document.getElementById('vc-header');
+  const heading=document.querySelector('#vc-header .hdr-title-link');
+  const greeting=document.getElementById('greet');
+  if(!overlay||!panel||!toggle||!closeButton||!backdrop||!header||!heading||!greeting)return;
+
+  const names={
+    home:'Centro di Comando',lotti:'Lotti / Arrivi',ordini:'Ordini',
+    'pedaggio-home':'Pedaggiatura',tinture:'Tinture',
+    avanzamento:'Lavorazioni',vernice:'Verniciatura','crust-home':'Crust disponibile',
+    produzione:'Organizzazione',magazzino:'Produzione',dashboard:'Piano e calendario',
+    cicli:'Cicli di produzione',tempi:'Tempi di lavoro',ricette:'Ricette',
+    prodotti:'Prodotti',inventario:'Inventario'
+  };
+  let currentRoute='home', routeHistory=[], routing=false, skipHistory=false;
+  let lastFocus=null,previousOverflow='',closeTimer=null,onClosed=null;
   function isOpen(){return overlay.classList.contains('is-open');}
   function markCurrent(){
-    const current=(typeof activeTab!=='undefined')?activeTab:'';
-    overlay.querySelectorAll('[data-vd-route]').forEach(b=>{
-      const target=b.dataset.vdRoute;
-      const matching=(target===current)||(current==='produzione'&&target==='ordini')||(current==='magazzino'&&target==='lotti');
-      if(matching) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current');
+    overlay.querySelectorAll('[data-vd-route]').forEach(button=>{
+      if(button.dataset.vdRoute===currentRoute)button.setAttribute('aria-current','page');
+      else button.removeAttribute('aria-current');
     });
   }
-  function open(){
+  function updateHeader(){
+    const home=currentRoute==='home';
+    header.classList.toggle('vc-in-section',!home);
+    heading.textContent=names[currentRoute]||'Centro di Comando';
+    heading.title='Torna alla Home';
+    heading.setAttribute('aria-label',home?'Home · Centro di Comando':'Torna alla Home da '+(names[currentRoute]||currentRoute));
+    if(home){
+      const h=new Date().getHours();
+      greeting.textContent=(h<12?'Buongiorno':h<18?'Buon pomeriggio':'Buonasera')+', Operatore';
+    }else greeting.textContent='SEZIONE';
+    markCurrent();
+  }
+  function setRoute(next){
+    if(!Object.prototype.hasOwnProperty.call(names,next))return;
+    if(currentRoute!==next){
+      if(!skipHistory){ routeHistory.push(currentRoute); if(routeHistory.length>25)routeHistory.shift(); }
+      currentRoute=next;
+    }
+    updateHeader();
+  }
+  // Anche i collegamenti delle schermate (non solo il menu) aggiornano l'intestazione.
+  const originalSwitch=typeof window.switchTab==='function'?window.switchTab:null;
+  const originalHome=typeof window.bancoHomeGo==='function'?window.bancoHomeGo:null;
+  if(originalSwitch){
+    window.switchTab=function(tab){
+      const answer=originalSwitch.apply(this,arguments);
+      if(!routing)setRoute(tab);
+      return answer;
+    };
+  }
+  if(originalHome){
+    window.bancoHomeGo=function(section){
+      routing=true;
+      try{return originalHome.apply(this,arguments);}
+      finally{routing=false;setRoute(section);}
+    };
+  }
+  function navigate(target){
+    if(target==='impostazioni'){if(typeof openModal==='function')openModal();return;}
+    if(typeof window.bancoHomeGo==='function')window.bancoHomeGo(target);
+    else if(typeof window.switchTab==='function')window.switchTab(target);
+  }
+  function back(){
+    const previous=routeHistory.pop()||'home';
+    skipHistory=true;
+    try{navigate(previous);}finally{skipHistory=false;}
+  }
+  function show(){
     if(isOpen())return;
-    markCurrent();lastFocus=document.activeElement;previousOverflow=document.body.style.overflow;
-    overlay.classList.add('is-open');overlay.setAttribute('aria-hidden','false');
-    toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Chiudi menu');
+    if(closeTimer){clearTimeout(closeTimer);closeTimer=null;}
+    onClosed=null;lastFocus=document.activeElement;
+    previousOverflow=document.body.style.overflow;
+    overlay.classList.add('is-visible');
+    overlay.setAttribute('aria-hidden','false');
+    toggle.setAttribute('aria-expanded','true');
     document.body.style.overflow='hidden';
-    closeButton.focus({preventScroll:true});
+    markCurrent();
+    // Due frame garantiscono la transizione anche su Safari iOS.
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      overlay.classList.add('is-open');
+      closeButton.focus({preventScroll:true});
+    }));
   }
-  function close(){
-    if(!isOpen())return;
-    overlay.classList.remove('is-open');overlay.setAttribute('aria-hidden','true');
-    toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Apri menu');
+  function finishClose(){
+    if(isOpen()||!overlay.classList.contains('is-visible'))return;
+    if(closeTimer){clearTimeout(closeTimer);closeTimer=null;}
+    overlay.classList.remove('is-visible');
+    overlay.setAttribute('aria-hidden','true');
+    const action=onClosed;onClosed=null;
+    if(action)action();
+    else if(lastFocus&&typeof lastFocus.focus==='function')lastFocus.focus({preventScroll:true});
+  }
+  function hide(after){
+    if(typeof after==='function')onClosed=after;
+    if(!overlay.classList.contains('is-visible')){
+      const action=onClosed;onClosed=null;if(action)action();return;
+    }
+    overlay.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded','false');
     document.body.style.overflow=previousOverflow;
-    if(lastFocus&&typeof lastFocus.focus==='function')lastFocus.focus({preventScroll:true});
+    // La visibilità viene rimossa SOLO dopo la transizione di uscita.
+    const seconds=getComputedStyle(panel).transitionDuration.split(',').map(v=>v.trim()).map(v=>v.endsWith('ms')?parseFloat(v)/1000:parseFloat(v)).filter(Number.isFinite);
+    const duration=Math.max(0,...seconds);
+    if(duration<=.03)finishClose();
+    else closeTimer=setTimeout(finishClose,Math.ceil(duration*1000)+90);
   }
-  function go(target){
-    close();
-    if(target==='impostazioni') { if(typeof openModal==='function')openModal(); return; }
-    const router=typeof bancoHomeGo==='function'?bancoHomeGo:(typeof vogueHomeGo==='function'?vogueHomeGo:null);
-    if(router) router(target);
-    else if(typeof switchTab==='function')switchTab(target);
+  panel.addEventListener('transitionend',e=>{
+    if(e.target===panel&&e.propertyName==='transform'&&!isOpen())finishClose();
+  });
+  function action(name){
+    const jobs={
+      briefing:()=>{if(typeof genBriefing==='function')genBriefing();},
+      'load-all':()=>{if(typeof loadAll==='function')loadAll();},
+      'calc-tempi':()=>{if(typeof openTempiCalc==='function')openTempiCalc();},
+      'import-update':()=>window.BancoIncrementale?.open?.(),
+      'import-colors':()=>window.BancoProduzione?.open?.(),
+      'import-history':()=>window.BancoStorico?.open?.(),
+      'demo-export':()=>window.BancoPreviewExport?.(),
+      'demo-import':()=>window.BancoPreviewImport?.(),
+      'demo-reset':()=>window.BancoPreviewReset?.()
+    };
+    if(jobs[name])jobs[name]();
   }
-  closeButton.addEventListener('click',close);
-  backdrop.addEventListener('click',close);
+  closeButton.addEventListener('click',()=>hide());
+  backdrop.addEventListener('click',()=>hide());
   overlay.addEventListener('click',e=>{
-    const b=e.target.closest('[data-vd-route]');
-    if(!b||!overlay.contains(b)) return;
-    e.preventDefault();e.stopPropagation();go(b.dataset.vdRoute);
+    const button=e.target.closest('[data-vd-route],[data-vd-action]');
+    if(!button||!overlay.contains(button))return;
+    e.preventDefault();e.stopPropagation();
+    if(button.dataset.vdRoute)hide(()=>navigate(button.dataset.vdRoute));
+    else hide(()=>action(button.dataset.vdAction));
   });
   document.addEventListener('keydown',e=>{
     if(!isOpen())return;
-    if(e.key==='Escape'){e.preventDefault();close();return;}
+    if(e.key==='Escape'){e.preventDefault();hide();return;}
     if(e.key!=='Tab')return;
     const f=[...panel.querySelectorAll('button:not([disabled])')];
     if(!f.length)return;
@@ -14954,11 +15137,13 @@ window.addEventListener('DOMContentLoaded',()=>{
   },{passive:true});
   overlay.addEventListener('touchend',e=>{
     if(!isOpen()||!start||!e.changedTouches.length)return;
-    const dx=e.changedTouches[0].clientX-start.x,dy=e.changedTouches[0].clientY-start.y;
-    if(dx < -65 && Math.abs(dx)>Math.abs(dy)*1.4)close();
+    const dx=e.changedTouches[0].clientX-start.x;
+    const dy=e.changedTouches[0].clientY-start.y;
+    if(dx < -65 && Math.abs(dx)>Math.abs(dy)*1.4)hide();
     start=null;
   },{passive:true});
-  window.VogueDrawer={open,close,isOpen};
+  window.VogueDrawer={open:show,close:hide,isOpen,back};
+  updateHeader();
 })();
 </script>
 
