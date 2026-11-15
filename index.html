@@ -15137,6 +15137,104 @@ window.addEventListener('DOMContentLoaded',()=>{
 }
 </style>
 
+
+<!-- VOGUE_DOCK_BASSO_HEADER_NITIDO_V4_20261115 · solo stile, nessun dato modificato -->
+<style id="vogue-bottom-safe-and-crisp-v4">
+/* Elimina il vecchio banner flottante della demo, causa della fascia velata sul titolo.
+   Le funzioni di esportazione/ripristino restano disponibili dal menu laterale. */
+#banco-demo-banner { display:none !important; }
+/* Fascia statica dietro la status bar, MAI sopra il testo dell'app. */
+body::before {
+  content:"";
+  position:fixed;
+  z-index:2;
+  top:0;
+  left:0;
+  right:0;
+  height:env(safe-area-inset-top, 0px);
+  background:#211b19;
+  pointer-events:none;
+}
+/* Header completamente opaco: niente trasparenze, sfocature o gradienti sui testi. */
+#app > .hdr {
+  background-color:#090d17 !important;
+  background-image:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  filter:none !important;
+  -webkit-filter:none !important;
+  opacity:1 !important;
+  box-shadow:none !important;
+}
+#app > .hdr::before, #app > .hdr::after {
+  content:none !important;
+  display:none !important;
+}
+#app > .hdr .hdr-l,
+#app > .hdr .hdr-greet,
+#app > .hdr .hdr-title,
+#app > .hdr .hdr-title-link,
+#app > .hdr .vc-back {
+  filter:none !important;
+  -webkit-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  text-shadow:none !important;
+  opacity:1 !important;
+}
+#app > .hdr .hdr-greet {
+  color:#f1d39d !important;
+  font-size:11px !important;
+  font-weight:700 !important;
+  letter-spacing:.12em !important;
+  line-height:1.35 !important;
+}
+#app > .hdr .hdr-title {
+  color:#fffaf3 !important;
+  font-weight:650 !important;
+  line-height:1.12 !important;
+}
+#app > .hdr .vc-back {
+  color:#eee8df !important;
+  background:#1a2230 !important;
+  font-size:13px !important;
+  font-weight:650 !important;
+}
+/* Dock abbassato verso l'home indicator senza coprire i controlli di sistema.
+   I pulsanti rimangono grandi almeno 48px in altezza per il tocco. */
+#vc-bottom-tabs {
+  bottom:max(7px, calc(env(safe-area-inset-bottom, 0px) - 19px)) !important;
+  width:calc(100% - 18px) !important;
+  max-width:465px !important;
+  min-height:56px !important;
+  padding:3px 5px !important;
+  gap:1px !important;
+  border-radius:999px !important;
+}
+#vc-bottom-tabs .vc-dock-btn {
+  min-height:48px !important;
+  padding:3px 0 2px !important;
+  gap:2px !important;
+}
+#vc-bottom-tabs .vc-dock-btn svg {
+  width:20px !important;
+  height:20px !important;
+  flex-basis:20px !important;
+}
+#vc-bottom-tabs .vc-dock-btn .vc-dock-label {
+  font-size:10px !important;
+  line-height:1.1 !important;
+}
+/* Spazio sufficiente per raggiungere gli ultimi pulsanti scorrendo, senza fascia morta. */
+#app { padding-bottom:calc(72px + env(safe-area-inset-bottom,0px)) !important; }
+@media(min-width:700px) {
+  #vc-bottom-tabs { width:430px !important; }
+}
+@media(max-width:355px) {
+  #vc-bottom-tabs .vc-dock-btn .vc-dock-label { font-size:9px !important; }
+}
+</style>
+
 <script id="vogue-drawer-controller">
 (function(){
   'use strict';
