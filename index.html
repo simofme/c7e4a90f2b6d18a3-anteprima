@@ -15235,6 +15235,80 @@ body::before {
 }
 </style>
 
+
+<!-- VOGUE_DOCK_V5_20261115 · correzione posizione iOS: nessun dato cambiato -->
+<style id="vogue-ios-layout-v5">
+/* Elimina la sovrapposizione del vecchio banner e la sfumatura nello spazio delle scritte. */
+html body { padding-top:0 !important; }
+#banco-demo-banner { display:none !important; }
+#app > .hdr {
+  background:#090d17 !important;
+  background-image:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+/* In Home non far aderire il testo all'effetto di scorrimento del bordo superiore iOS. */
+#app > .hdr:not(.vc-in-section) {
+  position:relative !important;
+  top:auto !important;
+  padding-top:20px !important;
+  padding-bottom:7px !important;
+  min-height:118px !important;
+}
+#app > .hdr:not(.vc-in-section) .hdr-l {
+  padding-top:9px !important;
+}
+#app > .hdr.vc-in-section {
+  padding-top:17px !important;
+  padding-bottom:12px !important;
+  background:#090d17 !important;
+}
+/* Testo con alto contrasto: usa il carattere nativo iPhone per il sottotitolo. */
+#app > .hdr .hdr-greet {
+  color:#f8ebd5 !important;
+  font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif !important;
+  font-size:12px !important;
+  font-weight:800 !important;
+  letter-spacing:.09em !important;
+  line-height:1.32 !important;
+  opacity:1 !important;
+  text-shadow:none !important;
+  -webkit-text-stroke:.12px currentColor;
+}
+#app > .hdr .hdr-title-link {
+  color:#ffffff !important;
+  opacity:1 !important;
+  font-weight:700 !important;
+  -webkit-text-stroke:.1px currentColor;
+  text-shadow:none !important;
+}
+/* In Safari normale resta sopra la barra di sistema; su PWA standalone
+   scende nell'area libera fra viewport web e indicatore Home dell'iPhone. */
+#vc-bottom-tabs { bottom:1px !important; }
+@media (display-mode:standalone) {
+  #vc-bottom-tabs { bottom:calc(0px - env(safe-area-inset-bottom, 0px) - 8px) !important; }
+}
+/* Riconoscimento alternativo per le PWA aperte da Schermata Home su iOS. */
+html.vogue-standalone #vc-bottom-tabs {
+  bottom:calc(0px - env(safe-area-inset-bottom, 0px) - 8px) !important;
+}
+/* I controlli di fondo devono essere sempre raggiungibili scorrendo. */
+#app { padding-bottom:calc(90px + env(safe-area-inset-bottom,0px)) !important; }
+</style>
+<script id="vogue-standalone-detection-v5">
+(function(){
+  try {
+    if (navigator.standalone===true || matchMedia('(display-mode: standalone)').matches) {
+      document.documentElement.classList.add('vogue-standalone');
+    }
+  } catch(e) {}
+})();
+</script>
+
 <script id="vogue-drawer-controller">
 (function(){
   'use strict';
