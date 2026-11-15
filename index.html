@@ -1029,6 +1029,26 @@ html body { padding-top:0 !important; }
     <button type="button" class="vc-back" id="vc-back" aria-label="Torna alla sezione precedente" onclick="VogueDrawer.back()">‹ Indietro</button>
   </header>
 
+  <!-- VOGUE bottom navigation: la barra non duplica né modifica i dati. -->
+  <nav id="vc-bottom-tabs" aria-label="Navigazione rapida">
+    <button class="vc-dock-btn" type="button" data-vc-dock="home" aria-label="Home" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span class="vc-dock-label">Home</span>
+    </button>
+    <button class="vc-dock-btn" type="button" data-vc-dock="ordini" aria-label="Ordini">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5M9 10h6M9 14h6M9 18h4"/></svg><span class="vc-dock-label">Ordini</span>
+    </button>
+    <button class="vc-dock-btn" type="button" data-vc-dock="avanzamento" aria-label="Lavorazioni">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20V10l6 3V8l6 3V5l6 3v12H3zM7 17h2m3 0h2m3 0h2"/></svg><span class="vc-dock-label">Lavori</span>
+    </button>
+    <button class="vc-dock-btn" type="button" data-vc-dock="tinture" aria-label="Tinture">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M6 6h12M6 6 3 12h6L6 6Zm12 0-3 6h6l-3-6ZM8 20h8"/></svg><span class="vc-dock-label">Tinture</span>
+    </button>
+    <button class="vc-dock-btn" type="button" data-vc-dock="menu" aria-label="Apri menu completo" aria-haspopup="dialog" aria-controls="vd-panel">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.1" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span class="vc-dock-label">Menu</span>
+    </button>
+  </nav>
+
+
   <div id="brief-area" style="display:none;"></div>
 
   
@@ -14979,6 +14999,144 @@ window.addEventListener('DOMContentLoaded',()=>{
 </script>
 
 <!-- VOGUE_COMPACT_DRAWER_CONTROLLER_V2_20261115 -->
+
+<!-- VOGUE_HOME_DOCK_V3_20261115 · sola UI, demo locale invariata -->
+<style id="vogue-home-dock-v3">
+/* La fascia di test rimane soltanto nell'area di sistema dell'iPhone:
+   niente gradiente translucido sopra le parole dell'intestazione. */
+#banco-demo-banner {
+  background:#2a211a !important;
+  background-image:none !important;
+  border:0 !important;
+  box-shadow:none !important;
+  height:var(--sat) !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  opacity:1 !important;
+  z-index:200 !important;
+}
+/* L'header non usa sfocatura: lettere sempre nitide su iOS/PWA. */
+#app > .hdr {
+  background:#090d17 !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.14);
+  isolation:isolate;
+}
+#app > .hdr .hdr-greet { color:#e1be86; opacity:1 !important; }
+#app > .hdr .hdr-title { color:#f1ece5; opacity:1 !important; }
+/* Ora e data sono riservate alla Home. Nelle sezioni resta il titolo compatto. */
+#app > .hdr:not(.vc-in-section) {
+  min-height:111px;
+  padding-top:13px;
+  padding-bottom:9px;
+  gap:4px;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:center;
+}
+#app > .hdr:not(.vc-in-section) .hdr-l { align-self:stretch; flex:0 0 auto; }
+#app > .hdr:not(.vc-in-section) .hdr-c {
+  display:block !important;
+  align-self:center;
+  width:calc(100% + 54px);
+  margin-left:-54px;
+  text-align:center;
+  padding-top:4px;
+}
+#app > .hdr .hdr-c .clock {
+  font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+  font-weight:300;
+  font-size:clamp(19px,5.5vw,28px);
+  line-height:1.2;
+  letter-spacing:.1em;
+  color:#e9e4dd;
+  font-variant-numeric:tabular-nums;
+}
+#app > .hdr .hdr-c .datestr {
+  color:#afa9b5;
+  margin-top:4px;
+  font-size:11px;
+  letter-spacing:.055em;
+  text-transform:capitalize;
+}
+#app > .hdr.vc-in-section .hdr-c { display:none !important; }
+#app > .hdr:not(.vc-in-section) .vd-menu-toggle { top:28px; }
+@media(max-width:480px) {
+ #app > .hdr:not(.vc-in-section) { min-height:108px; }
+ #app > .hdr:not(.vc-in-section) .hdr-title { font-size:clamp(22px,5.8vw,29px); }
+ #app > .hdr:not(.vc-in-section) .vd-menu-toggle { top:27px; }
+}
+/* Barra flottante inferiore: comoda con una sola mano e sempre presente. */
+#vc-bottom-tabs {
+  position:fixed;
+  z-index:650;
+  left:50%;
+  bottom:calc(env(safe-area-inset-bottom,0px) + 10px);
+  transform:translateX(-50%);
+  width:calc(100% - 24px);
+  max-width:465px;
+  min-height:68px;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  align-items:stretch;
+  gap:2px;
+  padding:7px;
+  border:1px solid rgba(242,243,250,.16);
+  border-radius:999px;
+  background:rgba(30,34,46,.93);
+  -webkit-backdrop-filter:blur(18px) saturate(145%);
+  backdrop-filter:blur(18px) saturate(145%);
+  box-shadow:0 10px 36px rgba(0,0,0,.62),inset 0 1px rgba(255,255,255,.10);
+  -webkit-tap-highlight-color:transparent;
+}
+#vc-bottom-tabs .vc-dock-btn {
+  -webkit-appearance:none;
+  appearance:none;
+  box-sizing:border-box;
+  background:transparent;
+  border:0;
+  border-radius:999px;
+  color:#c8ccd6;
+  min-width:0;
+  min-height:53px;
+  padding:5px 0 4px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:3px;
+  font-family:-apple-system,BlinkMacSystemFont,'Outfit',sans-serif;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:background-color .22s ease,color .22s ease,transform .18s ease;
+  touch-action:manipulation;
+}
+#vc-bottom-tabs .vc-dock-btn svg { width:23px; height:23px; flex:0 0 23px; stroke:currentColor; }
+#vc-bottom-tabs .vc-dock-btn .vc-dock-label {
+  font-size:10px; font-weight:500; line-height:1.1;
+  letter-spacing:.005em; white-space:nowrap;
+}
+#vc-bottom-tabs .vc-dock-btn[aria-current="page"] {
+  color:#fff;
+  background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.08));
+  box-shadow:inset 0 1px rgba(255,255,255,.1);
+}
+#vc-bottom-tabs .vc-dock-btn:active { transform:scale(.93); }
+#vc-bottom-tabs .vc-dock-btn:focus-visible { outline:2px solid #d5b680;outline-offset:-3px; }
+#app { padding-bottom:calc(103px + env(safe-area-inset-bottom,0px)) !important; }
+@media(min-width:700px){
+  #vc-bottom-tabs { width:430px; }
+}
+@media(max-width:355px){
+  #vc-bottom-tabs { width:calc(100% - 14px); padding:5px; }
+  #vc-bottom-tabs .vc-dock-btn .vc-dock-label {font-size:9px;}
+}
+@media(prefers-reduced-motion:reduce){
+  #vc-bottom-tabs .vc-dock-btn { transition:none !important; }
+}
+</style>
+
 <script id="vogue-drawer-controller">
 (function(){
   'use strict';
@@ -15020,6 +15178,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       greeting.textContent=(h<12?'Buongiorno':h<18?'Buon pomeriggio':'Buonasera')+', Operatore';
     }else greeting.textContent='SEZIONE';
     markCurrent();
+    window.dispatchEvent(new CustomEvent('vogue:route',{detail:{route:currentRoute}}));
   }
   function setRoute(next){
     if(!Object.prototype.hasOwnProperty.call(names,next))return;
@@ -15142,8 +15301,36 @@ window.addEventListener('DOMContentLoaded',()=>{
     if(dx < -65 && Math.abs(dx)>Math.abs(dy)*1.4)hide();
     start=null;
   },{passive:true});
-  window.VogueDrawer={open:show,close:hide,isOpen,back};
+  window.VogueDrawer={open:show,close:hide,isOpen,back,go:navigate,current:()=>currentRoute};
   updateHeader();
+})();
+</script>
+
+
+<script id="vogue-home-dock-controller-v3">
+(function(){
+  'use strict';
+  const bar=document.getElementById('vc-bottom-tabs');
+  if(!bar)return;
+  const buttons=[...bar.querySelectorAll('[data-vc-dock]')];
+  function update(route){
+    for(const b of buttons){
+      if(b.dataset.vcDock===route)b.setAttribute('aria-current','page');
+      else b.removeAttribute('aria-current');
+    }
+  }
+  bar.addEventListener('click',e=>{
+    const button=e.target.closest('[data-vc-dock]');
+    if(!button || !bar.contains(button))return;
+    const route=button.dataset.vcDock;
+    if(route==='menu'){window.VogueDrawer?.open();return;}
+    window.VogueDrawer?.go(route);
+    if(document.activeElement===button)button.blur();
+  });
+  window.addEventListener('vogue:route',event=>{
+    update(event.detail?.route||'home');
+  });
+  update(window.VogueDrawer?.current?.()||'home');
 })();
 </script>
 
