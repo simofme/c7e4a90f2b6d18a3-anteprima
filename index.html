@@ -741,6 +741,35 @@ input,textarea,select{font-size:16px!important;}
 .vog-lotto-details{font-size:.68rem;line-height:1.45;color:#d1bc90;margin-top:.2rem;white-space:normal;min-width:150px;}
 @media(max-width:720px){.vog-lotto-details{font-size:.66rem}.vog-crust-spessore{margin-left:0;}}
 </style>
+
+<!-- VOGUE_DRAWER_LEFT_V1_20261115 — navigazione visiva, nessun dato modificato -->
+<style id="vogue-drawer-left-v1">
+#app > .hdr { position: relative; padding-left: max(78px, 5.6vw); }
+.vd-menu-toggle { box-sizing: border-box; position:absolute; top:15px; left:16px; z-index:6; display:grid; place-items:center; width:45px; height:45px; padding:0; border-radius:50%; border:1px solid rgba(255,255,255,.15); background:linear-gradient(150deg,#2b303a,#181c25); color:#f6f6f6; box-shadow:0 3px 12px #0005; cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+.vd-menu-toggle:active { transform:scale(.96); background:#343c49; }
+.vd-menu-toggle:focus-visible, .vd-panel button:focus-visible { outline:2px solid #dbc18a; outline-offset:2px; }
+.vd-overlay { position:fixed; inset:0; z-index:2147483647; visibility:hidden; pointer-events:none; }
+.vd-overlay.is-open { visibility:visible; pointer-events:auto; }
+.vd-backdrop { position:absolute; inset:0; background:rgba(1,5,12,.66); opacity:0; transition:opacity .28s ease; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px); }
+.vd-overlay.is-open .vd-backdrop { opacity:1; }
+.vd-panel { box-sizing:border-box; position:absolute; inset-block:0; left:0; width:min(345px,86vw); height:100%; height:100dvh; padding:max(18px,env(safe-area-inset-top)) 14px max(22px,env(safe-area-inset-bottom)); overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; background:#10141e; border-right:1px solid #3e4350; color:#efefee; box-shadow:12px 0 38px #0006; transform:translate3d(-102%,0,0); transition:transform .3s cubic-bezier(.22,.82,.24,1); font-family:-apple-system,BlinkMacSystemFont,'Outfit',sans-serif; }
+.vd-overlay.is-open .vd-panel { transform:translate3d(0,0,0); }
+.vd-panel-header { display:flex; gap:12px; align-items:center; padding:7px 3px 17px; border-bottom:1px solid #2f3642; }
+.vd-identity { display:flex; align-items:center; justify-content:center; width:45px; height:45px; flex:0 0 45px; border-radius:13px; background:#2d261b; color:#e5cb92; font-size:23px; font-weight:700; }
+.vd-app-name { font-size:18px; font-weight:700; letter-spacing:.01em; }
+.vd-app-sub { font-size:11px; color:#a4aab6; margin-top:3px; }
+.vd-close { margin-left:auto; flex-shrink:0; border:1px solid #3a4250; border-radius:12px; width:39px; height:39px; background:#1d2431; color:#f1f1f1; font-size:22px; cursor:pointer; }
+.vd-group-label { margin:19px 9px 7px; color:#bba172; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+.vd-nav { display:flex; flex-direction:column; gap:2px; }
+.vd-nav button { box-sizing:border-box; width:100%; min-height:45px; display:flex; align-items:center; gap:13px; padding:9px 12px; border:1px solid transparent; border-radius:11px; color:#e6e9ef; background:transparent; font:500 14px/1.3 -apple-system,BlinkMacSystemFont,'Outfit',sans-serif; text-align:left; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.vd-nav button .vd-emoji { display:grid; place-items:center; width:26px; height:26px; flex:0 0 26px; font-size:19px; }
+.vd-nav button:hover,.vd-nav button:active { background:#242b39; }
+.vd-nav button[aria-current="page"] { background:#3a3224; color:#edcd94; border-color:#655035; }
+.vd-section-divider { height:1px; background:#313846; margin:14px 6px; }
+.vd-bottom { color:#929cae; font-size:11px; line-height:1.6; padding:14px 9px 4px; }
+@media (max-width:820px){#app > .hdr { padding-left:64px; padding-right:12px; } #app > .hdr .hdr-l { align-items:flex-start; } .vd-menu-toggle {top:12px;left:11px;width:45px;height:45px;} }
+@media (prefers-reduced-motion:reduce){ .vd-panel,.vd-backdrop { transition-duration:.01ms!important; } }
+</style>
 </head>
 <body><div id="boot301">Banco 3.0.1 · apertura archivio locale… <a style="color:#9df" href="/diagnosi-iphone301.html">Diagnostica e recupero</a><p>Non occorre una chiave Anthropic. Se manca la rete, l’archivio già presente deve aprirsi comunque.</p></div>
 
@@ -849,7 +878,47 @@ input,textarea,select{font-size:16px!important;}
 
 <!-- APP -->
 <div id="app" style="display:none;">
+
+  <!-- Menu laterale; nascosto fino al tap sull'icona -->
+  <div class="vd-overlay" id="vd-overlay" aria-hidden="true">
+    <div class="vd-backdrop" id="vd-backdrop"></div>
+    <aside id="vd-panel" class="vd-panel" role="dialog" aria-modal="true" aria-label="Menu di navigazione" tabindex="-1">
+      <div class="vd-panel-header">
+        <div class="vd-identity" aria-hidden="true">⌘</div>
+        <div><div class="vd-app-name">Centro di Comando</div><div class="vd-app-sub">Navigazione rapida</div></div>
+        <button type="button" class="vd-close" id="vd-close" aria-label="Chiudi menu">×</button>
+      </div>
+      <div class="vd-group-label">Principali</div>
+      <nav class="vd-nav" aria-label="Sezioni principali">
+        <button type="button" data-vd-route="home"><span class="vd-emoji" aria-hidden="true">⌂</span> Home</button>
+        <button type="button" data-vd-route="lotti"><span class="vd-emoji" aria-hidden="true">📦</span> Lotti / Arrivi</button>
+        <button type="button" data-vd-route="ordini"><span class="vd-emoji" aria-hidden="true">📋</span> Ordini</button>
+        <button type="button" data-vd-route="pedaggio-home"><span class="vd-emoji" aria-hidden="true">📏</span> Pedaggiatura</button>
+        <button type="button" data-vd-route="tinture"><span class="vd-emoji" aria-hidden="true">⚖️</span> Tinture</button>
+        <button type="button" data-vd-route="avanzamento"><span class="vd-emoji" aria-hidden="true">🏭</span> Lavorazioni</button>
+        <button type="button" data-vd-route="ricette"><span class="vd-emoji" aria-hidden="true">🧪</span> Ricette</button>
+        <button type="button" data-vd-route="vernice"><span class="vd-emoji" aria-hidden="true">🎨</span> Verniciatura</button>
+        <button type="button" data-vd-route="crust-home"><span class="vd-emoji" aria-hidden="true">🟤</span> Crust disponibile</button>
+      </nav>
+      <div class="vd-section-divider"></div>
+      <div class="vd-group-label">Altre sezioni</div>
+      <nav class="vd-nav" aria-label="Altre sezioni">
+        <button type="button" data-vd-route="dashboard"><span class="vd-emoji" aria-hidden="true">📅</span> Piano e calendario</button>
+        <button type="button" data-vd-route="cicli"><span class="vd-emoji" aria-hidden="true">🔁</span> Cicli di produzione</button>
+        <button type="button" data-vd-route="inventario"><span class="vd-emoji" aria-hidden="true">🗄️</span> Inventario</button>
+        <button type="button" data-vd-route="prodotti"><span class="vd-emoji" aria-hidden="true">🧴</span> Prodotti</button>
+        <button type="button" data-vd-route="impostazioni"><span class="vd-emoji" aria-hidden="true">⚙️</span> Impostazioni</button>
+      </nav>
+      <div class="vd-bottom">La navigazione non modifica gli ordini né i dati salvati.</div>
+    </aside>
+  </div>
+
   <header class="hdr">
+
+    <button type="button" id="vd-menu-toggle" class="vd-menu-toggle" aria-label="Apri menu" aria-controls="vd-panel" aria-expanded="false" onclick="VogueDrawer.open()">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+
     <div class="hdr-l">
       <span class="hdr-greet" id="greet">Buongiorno, Operatore</span>
       <button type="button" class="hdr-title hdr-title-link" onclick="bancoHomeGo('home')" title="Torna alla Home" aria-label="Home · Centro di Comando">Centro di Comando</button>
@@ -14819,5 +14888,79 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(typeof renderOrderList==='function')renderOrderList();
 });
 </script>
+
+<!-- VOGUE_DRAWER_LEFT_V1_20261115 -->
+<script id="vogue-drawer-controller">
+(function(){
+  'use strict';
+  const overlay=document.getElementById('vd-overlay');
+  const panel=document.getElementById('vd-panel');
+  const toggle=document.getElementById('vd-menu-toggle');
+  const closeButton=document.getElementById('vd-close');
+  const backdrop=document.getElementById('vd-backdrop');
+  if(!overlay||!panel||!toggle||!closeButton||!backdrop) return;
+  let lastFocus=null,previousOverflow='';
+  function isOpen(){return overlay.classList.contains('is-open');}
+  function markCurrent(){
+    const current=(typeof activeTab!=='undefined')?activeTab:'';
+    overlay.querySelectorAll('[data-vd-route]').forEach(b=>{
+      const target=b.dataset.vdRoute;
+      const matching=(target===current)||(current==='produzione'&&target==='ordini')||(current==='magazzino'&&target==='lotti');
+      if(matching) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current');
+    });
+  }
+  function open(){
+    if(isOpen())return;
+    markCurrent();lastFocus=document.activeElement;previousOverflow=document.body.style.overflow;
+    overlay.classList.add('is-open');overlay.setAttribute('aria-hidden','false');
+    toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Chiudi menu');
+    document.body.style.overflow='hidden';
+    closeButton.focus({preventScroll:true});
+  }
+  function close(){
+    if(!isOpen())return;
+    overlay.classList.remove('is-open');overlay.setAttribute('aria-hidden','true');
+    toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Apri menu');
+    document.body.style.overflow=previousOverflow;
+    if(lastFocus&&typeof lastFocus.focus==='function')lastFocus.focus({preventScroll:true});
+  }
+  function go(target){
+    close();
+    if(target==='impostazioni') { if(typeof openModal==='function')openModal(); return; }
+    const router=typeof bancoHomeGo==='function'?bancoHomeGo:(typeof vogueHomeGo==='function'?vogueHomeGo:null);
+    if(router) router(target);
+    else if(typeof switchTab==='function')switchTab(target);
+  }
+  closeButton.addEventListener('click',close);
+  backdrop.addEventListener('click',close);
+  overlay.addEventListener('click',e=>{
+    const b=e.target.closest('[data-vd-route]');
+    if(!b||!overlay.contains(b)) return;
+    e.preventDefault();e.stopPropagation();go(b.dataset.vdRoute);
+  });
+  document.addEventListener('keydown',e=>{
+    if(!isOpen())return;
+    if(e.key==='Escape'){e.preventDefault();close();return;}
+    if(e.key!=='Tab')return;
+    const f=[...panel.querySelectorAll('button:not([disabled])')];
+    if(!f.length)return;
+    if(e.shiftKey&&document.activeElement===f[0]){e.preventDefault();f[f.length-1].focus();}
+    else if(!e.shiftKey&&document.activeElement===f[f.length-1]){e.preventDefault();f[0].focus();}
+  });
+  let start=null;
+  overlay.addEventListener('touchstart',e=>{
+    if(!isOpen()||!e.touches.length)return;
+    start={x:e.touches[0].clientX,y:e.touches[0].clientY};
+  },{passive:true});
+  overlay.addEventListener('touchend',e=>{
+    if(!isOpen()||!start||!e.changedTouches.length)return;
+    const dx=e.changedTouches[0].clientX-start.x,dy=e.changedTouches[0].clientY-start.y;
+    if(dx < -65 && Math.abs(dx)>Math.abs(dy)*1.4)close();
+    start=null;
+  },{passive:true});
+  window.VogueDrawer={open,close,isOpen};
+})();
+</script>
+
 </body>
 </html>
