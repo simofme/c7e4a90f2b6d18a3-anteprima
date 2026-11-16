@@ -1224,6 +1224,14 @@ html.vogue-standalone #vc-bottom-tabs {
 /* I controlli di fondo devono essere sempre raggiungibili scorrendo. */
 #app { padding-bottom:calc(90px + env(safe-area-inset-bottom,0px)) !important; }
 </style>
+<style id="vogue-ordini-verniciatura-separation-v8">
+/* Ordini: apri subito gli strumenti e la lista; il piano passate non ingombra. */
+#tab-produzione #vern-gauges,
+#tab-produzione #vogue-vern-subnav { display:none !important; }
+/* Stessi componenti e dati, mostrati soltanto dalla rotta Verniciatura. */
+#tab-produzione[data-vogue-route="vernice"] #vern-gauges { display:grid !important; }
+#tab-produzione[data-vogue-route="vernice"] #vogue-vern-subnav { display:contents !important; }
+</style>
 </head>
 <body>
 <input id="banco-demo-file" type="file" accept=".json,application/json" hidden onchange="BancoPreviewRead(event)"><div id="boot301">Vogue 3.0.1 · apertura archivio locale… <a style="color:#9df" href="/diagnosi-iphone301.html">Diagnostica e recupero</a><p>Non occorre una chiave Anthropic. Se manca la rete, l’archivio già presente deve aprirsi comunque.</p></div>
@@ -1649,15 +1657,17 @@ html.vogue-standalone #vc-bottom-tabs {
   <!-- TAB PRODUZIONE -->
   <div id="tab-produzione" style="display:none;">
     <div class="prod-wrap">
-      <!-- Capacity Gauges -->
-      <div class="gauges-row" id="vern-gauges"></div>
-      
-      <!-- Sub-tabs -->
+      <!-- Calendario passate: visibile SOLTANTO nella sezione Verniciatura. -->
+      <div class="gauges-row" id="vern-gauges" aria-label="Calendario passate di verniciatura"></div>
+
+      <!-- Ordini: solo azioni essenziali. Verniciatura: navigazione del piano passate. -->
       <div class="subtab-bar">
-        <button class="pvtab" id="pvtab-list" onclick="showListView(true)">☰<span class="pv-lbl"> Lista Ordini</span></button>
-        <button class="pvtab" id="pvtab-weeks" onclick="showWeeksView()">📅<span class="pv-lbl"> Per Settimana</span></button>
-        <button class="pvtab" id="pvtab-kanban" onclick="showKanbanView()">📋<span class="pv-lbl"> Bacheca</span></button>
-        <button class="pvtab" id="pvtab-mc" onclick="openMC()" style="color:#34d399;border-color:rgba(52,211,153,.25);">🌅<span class="pv-lbl"> Riepilogo</span></button>
+        <div class="vogue-vern-subnav" id="vogue-vern-subnav" role="group" aria-label="Viste della verniciatura">
+          <button class="pvtab" id="pvtab-list" onclick="showListView(true)">☰<span class="pv-lbl"> Lista Ordini</span></button>
+          <button class="pvtab" id="pvtab-weeks" onclick="showWeeksView()">📅<span class="pv-lbl"> Per Settimana</span></button>
+          <button class="pvtab" id="pvtab-kanban" onclick="showKanbanView()">📋<span class="pv-lbl"> Bacheca</span></button>
+          <button class="pvtab" id="pvtab-mc" onclick="openMC()" style="color:#34d399;border-color:rgba(52,211,153,.25);">🌅<span class="pv-lbl"> Riepilogo</span></button>
+        </div>
         <button class="pvtab" style="margin-left:auto;color:var(--gold);border-color:rgba(212,175,55,.3);" onclick="openFotoImport()">📥<span class="pv-lbl"> Importa</span></button>
         <button class="btn-add-ord" onclick="openOrdModal()">+ Nuovo Ordine</button>
       </div>
@@ -16044,6 +16054,23 @@ document.addEventListener('DOMContentLoaded',()=>{
     update(event.detail?.route||'home');
   });
   update(window.VogueDrawer?.current?.()||'home');
+})();
+</script>
+<script id="vogue-ordini-verniciatura-controller-v8">
+(function () {
+  'use strict';
+  const tab = document.getElementById('tab-produzione');
+  if (!tab) return;
+  function aggiornaVista(route) {
+    const isVerniciatura = route === 'vernice';
+    tab.dataset.vogueRoute = isVerniciatura ? 'vernice' : 'ordini';
+    // Nessun dato o filtro viene cancellato dal cambio di visibilità.
+    if (isVerniciatura && typeof window.renderGauges === 'function') window.renderGauges();
+  }
+  window.addEventListener('vogue:route', function (event) {
+    aggiornaVista(event.detail && event.detail.route);
+  });
+  aggiornaVista(window.VogueDrawer && window.VogueDrawer.current ? window.VogueDrawer.current() : 'home');
 })();
 </script>
 </body>
